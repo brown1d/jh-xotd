@@ -158,20 +158,16 @@ void *outbound(void *);
 void *inbound(void *);
 
 void read_config(char *name);
-void config_device(char *device_name, char *remote, char *setup,
-		   char *circuits);
+void config_device(char *device_name, char *remote, char *setup, char *circuits);
 
 int read_xot(struct xot *xot, unsigned char *packet, int len);
-int read_tap(struct xot_device *dev, unsigned char *cmd, unsigned char *buf,
-	     int len);
+int read_tap(struct xot_device *dev, unsigned char *cmd, unsigned char *buf, int len);
 
 int write_xot(struct xot *xot, const unsigned char *buf, int len);
-int write_tap(struct xot_device *dev, unsigned char cmd,
-	      const unsigned char *buf, int len);
+int write_tap(struct xot_device *dev, unsigned char cmd, const unsigned char *buf, int len);
 
 static char *addr(struct sockaddr *sa)
 {
-
   switch (sa->sa_family) {
   case AF_INET:
     return inet_ntoa(((struct sockaddr_in *)sa)->sin_addr);
@@ -264,7 +260,7 @@ int main(int argc, char *argv[])
       ++errflg;
     } else {
       config_device(argv[optind], argv[optind + 1],
-		      argc - optind >
+		    argc - optind >
 		    2 ? argv[optind + 2] : NULL,
 		    argc - optind >
 		    3 ? argv[optind + 2] : NULL);
@@ -406,6 +402,10 @@ int create_outbound(struct xot_device *dev)
   if (*dev->setup) {
     int len = strlen(dev->setup) + 1 + strlen(dev->name) + 1;
     char *command = malloc(len);
+    if (command == NULL) {
+      printd("Unable to allocate memory for command");
+      return 0;
+    }
     strcpy(command, dev->setup);
     strcat(command, " ");
     strcat(command, dev->name);
