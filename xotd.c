@@ -258,16 +258,16 @@ int main(int argc, char *argv[])
       ++errflg;
     } else {
       read_config(config);
+    }
+  } else {
+    if (argc - optind < 2 || argc - optind > 4) {
+      ++errflg;
     } else {
-      if (argc - optind < 2 || argc - optind > 4) {
-	++errflg;
-      } else {
-	config_device(argv[optind], argv[optind + 1],
+      config_device(argv[optind], argv[optind + 1],
 		      argc - optind >
-		      2 ? argv[optind + 2] : NULL,
-		      argc - optind >
-		      3 ? argv[optind + 2] : NULL);
-      }
+		    2 ? argv[optind + 2] : NULL,
+		    argc - optind >
+		    3 ? argv[optind + 2] : NULL);
     }
   }
   
