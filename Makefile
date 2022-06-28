@@ -1,6 +1,6 @@
 # Usage:
 # make			# Compile all binary
-# malke clean		# remove all binaries and objects
+# make clean		# remove all binaries and objects
 
 .PHONY = all clean
 
